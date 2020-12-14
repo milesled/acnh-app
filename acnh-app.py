@@ -10,6 +10,7 @@ time = data['data']['datetime']['time']
 
 def timesplit(time_str):
     time = time_str.split(':')
+
     times = {
         'hour': time[0],
         'minute': time[1],
