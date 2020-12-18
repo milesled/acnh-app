@@ -1,0 +1,190 @@
+body {
+    background: url("wallpaper.png");
+    height: auto;
+    font-family: Lato;
+    color: white;
+}
+
+h2 {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+h3 {
+    font-weight: normal;
+    font-size: 20px;
+}
+
+p {
+    font-size: 18px;
+}
+
+.datetime {
+    grid-area: date-time;
+    display: inline;
+    text-align: center;
+}
+
+.location {
+    padding-top: 10px;
+    margin-bottom: -5px;
+}
+
+.time {
+    margin-top: -5px;
+    font-size: 72px;
+    font-weight: bolder;
+    margin-bottom: -5px;
+}
+
+.date {
+    margin-top: -5px;
+    margin-bottom: -5px;
+}
+
+.fish { 
+    grid-area: fish-label;
+    font-weight: bold;
+    font-size: 20px;
+ }
+.bugs { 
+    grid-area: bug-label; 
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.backbox {
+    height: inherit;
+    width: inherit;
+    background-color: rgba(255,255,255, 0.45);
+    border-radius: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.now_fish {
+    grid-area: fish-var;
+    display: block;
+    text-align: center;
+}
+
+.fish_var {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    height: auto;
+    width: auto;
+}
+
+.now_bugs {
+    grid-area: bugs-var;
+    display: block;
+    text-align: center;
+}
+
+.bugs_var {
+    height: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.always_fish {
+    grid-area: fish-stat;
+    display: block;
+    text-align: center;
+}
+
+.fish_stat {
+    height: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.always_bugs {
+    grid-area: bugs-stat;
+    display: block;
+    text-align: center;
+}
+
+.bugs_stat {
+    height: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.footer {
+    grid-area: footer;
+    height: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.grid {
+    display: grid;
+    justify-items: center;
+    
+    width: 100%;
+    height: auto;
+
+    grid-template-columns: 6% auto 4% auto 5% auto 4% auto 6%;
+    grid-template-rows: auto 4% repeat(2, auto);
+    grid-template-areas: 
+        ". . . date-time date-time date-time . . ."
+        ". fish-label fish-label fish-label . bug-label bug-label bug-label ."
+        ". fish-var . fish-stat . bugs-var . bugs-stat ."
+        ". . footer footer footer footer footer . .";
+}
+
+.img {
+    grid-area: img;
+}
+
+.critterimg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 50%;
+    margin: 10px;
+}
+
+.names {
+    grid-area: names;
+}
+
+.prices {
+    grid-area: prices;
+}
+
+.phrases {
+    grid-area: phrases;
+}
+
+.availability {
+    grid-area: avail;
+}
+
+.when_avail {
+    display: inline-block;
+    justify-items: center;
+}
+
+/* critter_view.html style */
+.critterview {
+    display:grid;
+    height: auto;
+    width: 100%;
+    align-items: center;
+    justify-items: center;
+
+    grid-template-columns: 6% repeat(3, auto 6%);
+    grid-template-rows: auto 40% repeat(2, auto);
+
+    grid-template-areas:
+        ". avail avail . names names ."
+        ". img img img img img ."
+        ". prices . . phrases phrases ."
+        ". prices . . phrases phrases .";
+}

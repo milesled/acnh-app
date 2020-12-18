@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<head>
+    <title>{{ data.name }}</title>
+    <link rel='stylesheet' type='text/css' href='../static/css/style.css'>
+</head>
+<body class="critterview">
+    <div class="img">
+        <img class="critterimg" src="{{ data.img }}"/>
+    </div>
+        <div class="names">
+            <h2>{{ data.name }}</h2>
+            <h2>{{ data.nameJP }}</h2>
+        </div>
+    <div class="prices">
+            <h3>Price:</h3><p>{{ data.price }}</p>
+            {% if data.type == "fish" %}
+                <h3>CJ Price: </h3><p>{{ data.pricecj }}</p>
+                <h3>Shadow: </h3><p>{{ data.shadow }}</p>
+            {% elif data.type == "bugs" %}
+                <h3>Flick Price: </h3><p>{{ data.priceflick }}</p>
+            {% endif %}
+    </div>
+    <div class="phrases">
+        <h3>Catch Phrase: </h3><p>{{ data.catchphrase }}</p>
+        <h3>Museum Donation Response: </h3><p>{{ data.phrase }}</p>
+    </div>
+    <div class="availability">
+        <span class="when_avail">
+            <p>Times: {{ data.time }}</p>
+            <p>Months: {{ data.months }}</p>
+        </span>
+    </div>
+</body>    
+</html>

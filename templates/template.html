@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<head>
+    <title>Animal Crossing Clock</title>
+    <link rel='stylesheet' type='text/css' href='../static/css/style.css'>
+    <link rel="fonts" type="text/css" href="//fonts.googleapis.com/css?family=Lato" />
+</head>
+<body>
+    <div class="grid">
+
+        <div class="datetime">
+            <h2 class="location">{{ dt.city }}, {{ dt.country }}</h2>
+            <h1 class="time">{{ dt.hour }}:{{ dt.minute }} {{dt.ampm_str }}</h1>
+            <h2 class="date">{{ dt.day }}, {{ dt.month_str }} {{dt.day_num}}, {{dt.year}}</h2>
+        </div>
+
+        <h2 class="fish">Fish</h2>
+        <div class="now_fish">
+            <h3>Available Now</h3>
+            <div class="backbox">
+                <div class="fish_var">
+                    {% for fish in critter['fish']['var'] %}
+                    {% set img = critter['fish']['var'][fish]['img'] %}
+                        <a href="{{ url_for('critter_view', critterID=img.id, critter_type=img.type) }}">
+                            <img src="{{ img.img_url }}" width="{{ img.width }}" height="{{ img.height }}" alt="{{ img.name }}"/></a>
+                    {% endfor %}
+                    </div>
+            </div>
+        </div>
+
+        <h2 class="bugs">Bugs</h2>
+        <div class="now_bugs">
+            <h3>Available Now</h3>
+            <div class="backbox">
+                <div class="bugs_var"> 
+                    {% for bug in critter['bugs']['var'] %}
+                    {% set img = critter['bugs']['var'][bug]['img'] %}
+                        <a href="{{ url_for('critter_view', critterID=img.id, critter_type=img.type) }}">
+                            <img src="{{ img.img_url }}" width="{{ img.width }}" height="{{ img.height }}" alt="{{ img.name }}"/></a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <div class="always_fish">
+            <h3>Available Always</h3>
+            <div class="fish_stat">
+                <div class="backbox">
+                    {% for fish in critter['fish']['stat'] %}
+                    {% set img = critter['fish']['stat'][fish]['img'] %}
+                        <a href="{{ url_for('critter_view', critterID=img.id, critter_type=img.type) }}">
+                            <img src="{{ img.img_url }}" width="{{ img.width }}" height="{{ img.height }}" alt="{{ img.name }}"/></a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <div class="always_bugs">
+            <h3>Available Always</h3>
+            <div class="backbox">
+                <div class="bugs_stat">
+                    {% for bug in critter['bugs']['stat'] %}
+                        {% set img = critter['bugs']['stat'][bug]['img'] %}
+                        <a href="{{ url_for('critter_view', critterID=img.id, critter_type=img.type) }}">
+                            <img src="{{ img.img_url }}" width="{{ img.width }}" height="{{ img.height }}" alt="{{ img.name }}"/></a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">Made by Miles Lederman. All images and rights belong to Nintendo.</div>
+    </div>
+</body>
+</html>
