@@ -1,5 +1,4 @@
-import urllib, requests
-import io, os, json
+import io, os, json, urllib, requests
 from flask import Flask, request, render_template, url_for, redirect
 # my custom written files
 from apikey import api_key
@@ -13,18 +12,18 @@ app.secret_key = os.urandom(24)
 
 # time, date, and location request function
 # returns the 'data' dictionary from the Timezone API request
-def timeRequest():
-    url = 'https://timezoneapi.io/api/ip/?token=' + api_key # stored in a separate file for security
+def timeRequest(ip):
+    url = 'https://timezoneapi.io/api/ip/?ip='+ip+'&token='+api_key # stored in a separate file for security
     response = requests.get(url) # this API requires using the 'requests' module
-    data = response.json()['data']  
+    data = response.json()['data']
     return data
 
 # in this function, we want to make a new time request, and then return
 # it as a dictionary of all the important info to display on the clock.
 # by writing this as a function, I can refresh the time on my webpage
 # when people refresh the page
-def timeUpdate():
-    refresh = timeRequest()
+def timeUpdate(ip):
+    refresh = timeRequest(ip)
     # i feel like most of these variables are pretty self-explanatory
     date_time={
         # time saved as a string in format "hr:min:sec"
@@ -85,8 +84,6 @@ def timeSplit(time_str):
 # global variables
 
 # initial request to start the process
-data = timeRequest()
-n_or_s = north_or_south(data)
 HEIGHT = 65 # constant that can be changed here to change in other places in program
 
 # fishLoad() requires both the hour and month as integers. it calls all the fish in one
@@ -94,7 +91,7 @@ HEIGHT = 65 # constant that can be changed here to change in other places in pro
 # month. if so, a new Fish object will created, and used to create a respective Image object.
 # these two objects will be stored in a nested dictionary, with the key name being the file name.
 # at the end, an overall dictionary with the available fish will be returned
-def fishLoad(hour, month):
+def fishLoad(hour, month, n_or_s):
     # requesting without an id at the end will return all fish
     fish_raw = urllib.request.urlopen('http://acnhapi.com/v1/fish/')
     # make it a JSON file
@@ -122,7 +119,7 @@ def fishLoad(hour, month):
 # bugLoad() is nearly identical to fishLoad() except with the slight difference
 # of calling upon a different URL and creating Bug objects instead of Fish objects.
 # see more in-depth documentation in fishLoad()
-def bugLoad(hour, month):
+def bugLoad(hour, month, n_or_s):
     bug_raw = urllib.request.urlopen('http://acnhapi.com/v1/bugs/')
     boog = json.load(bug_raw) # haha silly name
     boog_dict = {} # list of Bug objects to be returned
@@ -153,18 +150,22 @@ def compressCritterData(feesh, bugs):
             critter_data['bugs']['var'][bug] = bugs[bug]
     return critter_data
 
-@app.route("/", methods=['GET'])
+@app.route("/", methods=['GET', 'POST'])
 def homePage():
-    date_time = timeUpdate()
+    data = timeRequest(request.remote_addr)
+    n_or_s = north_or_south(data)
+    date_time = timeUpdate(request.remote_addr)
     hour = timeSplit(date_time['time'])['hour']
     month = removeZero(date_time['month'])
-    critter_data = compressCritterData(fishLoad(hour, month), bugLoad(hour, month))
+    critter_data = compressCritterData(fishLoad(hour, month, n_or_s), bugLoad(hour, month, n_or_s))
     return render_template('template.html', critter=critter_data, dt=date_time)
 
 # for future miles reference: try to pull the critter object that's already been generated
 # to help save processing time with the urllib request
 @app.route("/<critter_type>/<critterID>", methods=['GET','POST'])
 def critter_view(critterID, critter_type):
+    data = timeRequest(request.remote_addr)
+    n_or_s = north_or_south(data)
     critter_raw = urllib.request.urlopen('http://acnhapi.com/v1/{}/{}'.format(critter_type, critterID))
     critter = json.load(critter_raw)
     pass_data = {
@@ -197,4 +198,4 @@ def critter_view(critterID, critter_type):
     return render_template('critter_view.html', data=pass_data)
 
 if __name__ == '__main__':
-    app.run(host='localhost', port=8080, debug=True)
+    app.run(host='0.0.0.0', port=8080, debug=False)
