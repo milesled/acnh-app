@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <head>
+    {# uses the same stylesheet as template.html #}
     <title>{{ data.name }}</title>
     <link rel='stylesheet' type='text/css' href='../static/css/style.css'>
 </head>
+{# in this instance, critterview serves as the grid container #}
 <body class="critterview">
     <div class="img">
         <img class="critterimg" src="{{ data.img }}"/>
@@ -11,6 +13,7 @@
             <h2>{{ data.name }}</h2>
             <h2>{{ data.nameJP }}</h2>
         </div>
+    {# since fish and bugs have a few different keys #}
     <div class="prices">
             <h3>Price:</h3><p>{{ data.price }}</p>
             {% if data.type == "fish" %}

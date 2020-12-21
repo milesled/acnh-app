@@ -1,18 +1,20 @@
 <!DOCTYPE html>
 <head>
     <title>Animal Crossing Clock</title>
+    {# importing style.css and Google's Lato typeface #}
     <link rel='stylesheet' type='text/css' href='../static/css/style.css'>
     <link rel="fonts" type="text/css" href="//fonts.googleapis.com/css?family=Lato" />
 </head>
 <body>
+    {# grid container used for CSS formatting #}
     <div class="grid">
-
+        {# container for the date & time #}
         <div class="datetime">
             <h2 class="location">{# {{ dt.city }}, #}{{ dt.country }}</h2>
             <h1 class="time">{{ dt.hour }}:{{ dt.minute }} {{dt.ampm_str }}</h1>
             <h2 class="date">{{ dt.day }}, {{ dt.month_str }} {{dt.day_num}}, {{dt.year}}</h2>
         </div>
-
+        {# display fish that are variable in time, and provide link to individual pages #}
         <h2 class="fish">Fish</h2>
         <div class="now_fish">
             <h3>Available Now</h3>
@@ -20,13 +22,14 @@
                 <div class="fish_var">
                     {% for fish in critter['fish']['var'] %}
                     {% set img = critter['fish']['var'][fish]['img'] %}
+                        {# create an <a> tag to link the images #}
                         <a href="{{ url_for('critter_view', critterID=img.id, critter_type=img.type) }}">
                             <img src="{{ img.img_url }}" width="{{ img.width }}" height="{{ img.height }}" alt="{{ img.name }}"/></a>
                     {% endfor %}
                     </div>
             </div>
         </div>
-
+        {# display fish that are variable in time #}
         <h2 class="bugs">Bugs</h2>
         <div class="now_bugs">
             <h3>Available Now</h3>
@@ -40,7 +43,7 @@
                 </div>
             </div>
         </div>
-
+        {# display fish that are always available to catch #}
         <div class="always_fish">
             <h3>Available Always</h3>
             <div class="fish_stat">
@@ -53,7 +56,7 @@
                 </div>
             </div>
         </div>
-
+        {# display bugs that are always available to catch #}
         <div class="always_bugs">
             <h3>Available Always</h3>
             <div class="backbox">
@@ -66,7 +69,7 @@
                 </div>
             </div>
         </div>
-
+        {# little footer at the bottom #}
         <div class="footer">Made by Miles Lederman. All images and rights belong to Nintendo.</div>
     </div>
 </body>
